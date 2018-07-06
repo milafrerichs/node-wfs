@@ -1,0 +1,20 @@
+{
+  "name": "wfs_info",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "milafrerichs <mila.frerichs@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "jasmine-node src",
+    "test:watch": "jasmine-node --autotest src",
+  },
+  "dependencies": {
+    "jasmine-node": "^1.15.0",
+    "node-fetch": "^2.1.2",
+    "xml2js": "^0.4.19",
+  },
+  "devDependencies": {
+    "nock": "^9.4.1"
+  }
+}
