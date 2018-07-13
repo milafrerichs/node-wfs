@@ -1,13 +1,13 @@
 {
-  "name": "node_wfs",
+  "name": "wfs_query",
   "version": "0.1.0",
   "main": "index.js",
   "author": "milafrerichs <mila.frerichs@gmail.com>",
   "license": "MIT",
   "private": false,
-	"engines": {
-		"node": ">=8.11"
-	},
+  "engines": {
+    "node": ">=8.11"
+  },
   "scripts": {
     "test": "jasmine-node .",
     "test:watch": "jasmine-node --autotest ."
