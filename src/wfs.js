@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const url = require('url');
+const fs = require('fs');
 var parseString = require('xml2js').parseString;
 
 const parseGetCapabilities = function(capabilitesXML) {
@@ -38,8 +40,41 @@ const getInfo = function(url) {
     .then(function(data) {
       return parseGetCapabilities(data);
     })
+};
+
+const saveFeature = function(urlString, typeName, format, outputfile) {
+  const feature = getFeature(urlString, typeName, format);
+  feature.then(function(result) {
+    if (format === 'application/json') {
+      result = JSON.stringify(result);
+    }
+    fs.writeFile(outputfile, result, function(err) {
+      if(err) {
+        console.log('err', err);
+      }
+      console.log('success');
+    });
+  })
 }
+const getFeature = function(urlString, typeName, format) {
+  const paramsString = `service=wfs&version=1.1.0&request=GetFeature&TYPENAME=${typeName}`;
+  const wfsUrlParams = new url.URLSearchParams(paramsString);
+  if (format) {
+    wfsUrlParams.append('outputFormat', format);
+  }
+  const wfsUrl = `${urlString}?${wfsUrlParams.toString()}`;
+  return fetch(wfsUrl)
+    .then(function(text) {
+      if (format == 'application/json') {
+        return text.json();
+      } else {
+        return text.text();
+      }
+    });
+};
 
 module.exports = {
-  getInfo: getInfo
+  getInfo: getInfo,
+  getFeature: getFeature,
+  saveFeature: saveFeature
 }
