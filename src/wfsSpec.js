@@ -14,11 +14,14 @@ describe("wfs", function() {
       .get('/layerName?service=wfs&version=1.1.0&request=GetCapabilities')
       .reply(200, getCapabitlitesXML);
       wfs.getInfo(url+'/layerName').then(function(result) {
-        expect(result).toEqual({
-          layerName: 'fis:re_planungsraum',
-          title: 'LOR',
-          abstract: 'LOR Abstract'
-        });
+        expect(result).toEqual([{
+          layerName: 'fis:re_direktion',
+          title: 'Polizeidirektionen',
+          abstract: 'Polizeidirektionen abstract',
+          srs: 'EPSG:25833',
+          otherSRS: ['EPSG:4258'],
+          outputFormats: []
+        }]);
         done();
       })
     });
