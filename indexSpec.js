@@ -1,10 +1,10 @@
 const nock = require('nock')
 const fs = require('fs');
 
-const wfs = require('./wfs');
+const wfs = require('./index');
 
-let getCapabitlitesXML = require('./../fixtures/getCapabilities');
-let getFeature = require('./../fixtures/getFeature');
+let getCapabitlitesXML = require('./fixtures/getCapabilities');
+let getFeature = require('./fixtures/getFeature');
 
 describe("wfs", function() {
   describe("getInfo", function() {
