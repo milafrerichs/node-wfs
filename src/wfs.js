@@ -44,24 +44,38 @@ const parseGetCapabilities = function(capabilitesXML) {
  *  featurecount
  *  }
  */
-var getInfo = function(url) {
-  var wfsUrl = url+'?service=wfs&version=1.1.0&request=GetCapabilities';
+const getInfo = function(url) {
+  const wfsUrl = url+'?service=wfs&version=1.1.0&request=GetCapabilities';
   return fetch(wfsUrl)
     .then(function(text) {
       return text.text();
     })
     .then(function(data) {
       return parseGetCapabilities(data);
-    });
+    })
 };
 
-var getFeature = function(urlString, typeName, format) {
-  var paramsString = 'service=wfs&version=1.1.0&request=GetFeature&TYPENAME='+typeName;
-  var wfsUrlParams = new url.URLSearchParams(paramsString);
+const saveFeature = function(urlString, typeName, format, outputfile) {
+  const feature = getFeature(urlString, typeName, format);
+  feature.then(function(result) {
+    if (format === 'application/json') {
+      result = JSON.stringify(result);
+    }
+    fs.writeFile(outputfile, result, function(err) {
+      if(err) {
+        console.log('err', err);
+      }
+      console.log('success');
+    });
+  })
+}
+const getFeature = function(urlString, typeName, format) {
+  const paramsString = `service=wfs&version=1.1.0&request=GetFeature&TYPENAME=${typeName}`;
+  const wfsUrlParams = new url.URLSearchParams(paramsString);
   if (format) {
     wfsUrlParams.append('outputFormat', format);
   }
-  var wfsUrl = urlString+'?'+wfsUrlParams.toString();
+  const wfsUrl = `${urlString}?${wfsUrlParams.toString()}`;
   return fetch(wfsUrl)
     .then(function(text) {
       if (format == 'application/json') {
@@ -75,4 +89,5 @@ var getFeature = function(urlString, typeName, format) {
 module.exports = {
   getInfo: getInfo,
   getFeature: getFeature,
-};
+  saveFeature: saveFeature
+}

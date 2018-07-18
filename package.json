@@ -1,6 +1,6 @@
 {
   "name": "wfs_query",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "index.js",
   "author": "milafrerichs <mila.frerichs@gmail.com>",
   "license": "MIT",
@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "jasmine-node": "^1.15.0",
+    "jsonix": "^2.4.1",
     "node-fetch": "^2.1.2",
+    "ogc-schemas": "^2.6.1",
+    "w3c-schemas": "^1.4.0",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
